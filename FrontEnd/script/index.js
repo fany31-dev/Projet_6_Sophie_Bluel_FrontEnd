@@ -13,3 +13,7 @@ async function getData() {
   }
 }
 getData ();
+
+
+/*Enlever l'affichage des éléments dans la galerie Projet */
+document.querySelector(".gallery").innerHTML = "";
