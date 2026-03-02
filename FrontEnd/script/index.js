@@ -7,20 +7,19 @@ async function getData() {
       throw new Error(`Response status: ${response.status}`);
     }
     /*Données/réponses retournées par l'API */
-    const results = await response.json();
-    console.log(results);
+    const resultsJson = await response.json();
+    console.log(resultsJson);
 
     /*Enleve l'affichage des éléments dans la galerie Projet */
     document.querySelector(".gallery").innerHTML = "";
     
     /*On affiche les projets dans la galerie*/
-    displayGallery(results);
+    displayGallery(resultsJson);
 
   } catch (error) {
     console.error(error.message);
   }
 }
-
 getData ();
 
 
@@ -30,8 +29,8 @@ getData ();
 
 
 /********************Fonction affichage des projets dans Galerie */
-function displayGallery (results) {
-  results.forEach(work=> {
+function displayGallery (resultsJson) {
+  resultsJson.forEach(work=> {
     /* creation des elements de la galerie Projet*/
     const figure = document.createElement("figure");
 
