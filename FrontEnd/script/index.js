@@ -48,6 +48,8 @@ function displayGallery (resultsJson) {
   });
 }
 
+
+/**********************************************************************/
 /**********récupération des données GET/categories depuis l'API *******/
 async function getCategories() {
   const urlCategories = "http://localhost:5678/api/categories";
@@ -61,11 +63,37 @@ async function getCategories() {
     const resultsCategoriesJson = await response.json();
     console.log(resultsCategoriesJson);
 
+    /*On affiche les projets dans la galerie*/
+    displayBtnFilter(resultsCategoriesJson);
+
   } catch (error) {
-    console.error(error.message);
+    /*console.error(error.message);*/
   }
 }
 getCategories ();
 
 
- 
+/********************Fonction affichage des projets dans Galerie */
+function displayBtnFilter (resultsCategoriesJson) {
+
+  /* recuperation de la section portfolio*/
+  const portfolio = document.querySelector("#portfolio");
+
+  /*** creation du container des Filtres ****/
+  const sectionFilters = document.createElement ("div");
+  sectionFilters.classList.add("sectionFilters");
+
+  /* on ajoute le container à portfolio*/
+  portfolio.appendChild(sectionFilters);
+
+  /* creation btn pour chaque categorie*/
+  resultsCategoriesJson.forEach(categories=> {
+  const btnFilter = document.createElement("button");
+  btnFilter.dataset.id = categories.id;
+  btnFilter.innerText = categories.name;
+
+  /* on ajoute le bouton au container*/
+  sectionFilters.appendChild(btnFilter);
+  });
+}
+
