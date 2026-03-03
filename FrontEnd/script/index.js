@@ -86,6 +86,12 @@ function displayBtnFilter (resultsCategoriesJson) {
   /* on ajoute le container à portfolio*/
   portfolio.appendChild(sectionFilters);
 
+  /*** creation btn "Tous/All" ***/
+  const btnAll = document.createElement("button");
+  btnAll.innerText = "Tous";
+  btnAll.dataset.id = "0";
+  sectionFilters.appendChild(btnAll);
+
   /* creation btn pour chaque categorie*/
   resultsCategoriesJson.forEach(categories=> {
   const btnFilter = document.createElement("button");
