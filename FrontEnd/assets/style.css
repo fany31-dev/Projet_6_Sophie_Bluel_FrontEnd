@@ -138,8 +138,9 @@ li:hover {
 
 
 button {
+	font-family: Syne;
 	min-width: 100px;
-		margin-right: 10px;
+	margin-right: 10px;
 	padding: 13px 18px;
 	font-weight: 700;
 	font-size: 16px;
