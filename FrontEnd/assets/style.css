@@ -125,6 +125,41 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/********* section filtre bouton ****/
+.sectionFilters{
+	width: fit-content;
+	display:flex;
+	margin: auto;
+	padding-bottom: 40px;
+	padding-top:20px;
+	gap: 10px;
+}
+
+
+button {
+	min-width: 100px;
+		margin-right: 10px;
+	padding: 13px 18px;
+	font-weight: 700;
+	font-size: 16px;
+	background-color: white;
+    border: 1px solid #1D6154;
+	margin: auto;
+	width: auto;
+	text-align: center;
+	color:#1D6154;
+	border-radius: 60px;
+	cursor: pointer;
+}
+
+button:active {
+	background-color: #1D6154;
+	color: white;
+}
+
+/**************************************/
+
 .gallery {
 	width: 100%;
 	display: grid;
