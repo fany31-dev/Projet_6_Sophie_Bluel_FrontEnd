@@ -75,9 +75,9 @@ getCategories ();
 
 /********************Fonction affichage des projets dans Galerie */
 function displayBtnFilter (resultsCategoriesJson) {
-
-  /* recuperation de la section portfolio*/
+  /* recuperation de la section portfolio et gallery*/
   const portfolio = document.querySelector("#portfolio");
+  const sectionProjet = document.querySelector(".gallery");
 
   /*** creation du container des Filtres ****/
   const sectionFilters = document.createElement ("div");
@@ -85,6 +85,7 @@ function displayBtnFilter (resultsCategoriesJson) {
 
   /* on ajoute le container à portfolio*/
   portfolio.appendChild(sectionFilters);
+  portfolio.insertBefore(sectionFilters, sectionProjet);
 
   /*** creation btn "Tous/All" ***/
   const btnAll = document.createElement("button");
@@ -101,5 +102,7 @@ function displayBtnFilter (resultsCategoriesJson) {
   /* on ajoute le bouton au container*/
   sectionFilters.appendChild(btnFilter);
   });
+
 }
+
 
