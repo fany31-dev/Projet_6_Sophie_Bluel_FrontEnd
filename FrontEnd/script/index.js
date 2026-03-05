@@ -83,7 +83,7 @@ async function getCategories() {
 }
 getCategories ();
 
-
+/****************************************************************/
 /********************Fonction affichage des projets dans Galerie */
 function displayBtnFilter (resultsCategoriesJson) {
   /* recuperation de la section portfolio et gallery*/
@@ -124,8 +124,8 @@ function filterByCategoryName(name) {
   const donneesFiltrées = works.filter (item => item.category.name === name);
   return donneesFiltrées;
 }
-
-/******** 7. AJOUT DES EVENT LISTENERS ************/
+/***********************************************/
+/******** AJOUT DES EVENT LISTENERS ************/
 function filterButtons() {
   const buttons = document.querySelectorAll(".sectionFilters button");
 
