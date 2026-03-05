@@ -1,3 +1,7 @@
+/** variable globale works */
+
+let works = [];
+
 /**********récupération des données GET/WORKS depuis l'API *******/
 async function getData() {
   const url = "http://localhost:5678/api/works";
@@ -11,22 +15,30 @@ async function getData() {
     const resultsJson = await response.json();
     /*console.log(resultsJson);
 
+    // On stocke les projets globalement */
+    works = resultsJson;
+
     /*Enleve l'affichage des éléments dans la galerie Projet */
     document.querySelector(".gallery").innerHTML = "";
     
     /*On affiche les projets dans la galerie*/
-    displayGallery(resultsJson);
+    displayGallery(works);
 
   } catch (error) {
     console.error(error.message);
   }
 }
+
 getData ();
 
 
 /********************Fonction affichage des projets dans Galerie */
-function displayGallery (resultsJson) {
-  resultsJson.forEach(work=> {
+function displayGallery (works) {
+
+  const sectionProjet = document.querySelector(".gallery");
+  sectionProjet.innerHTML = "";
+
+  works.forEach(work=> {
     /* creation des elements de la galerie Projet*/
     const figure = document.createElement("figure");
 
@@ -42,8 +54,6 @@ function displayGallery (resultsJson) {
     /*Ajout dans gallery et figure*/
     figure.appendChild(imageElement);
     figure.appendChild(titleElement);
-
-    const sectionProjet = document.querySelector(".gallery");
     sectionProjet.appendChild(figure);
   });
 }
@@ -61,13 +71,14 @@ async function getCategories() {
     }
     /*Données/réponses retournées par l'API */
     const resultsCategoriesJson = await response.json();
-    console.log(resultsCategoriesJson);
+    /*console.log(resultsCategoriesJson);
 
     /*On affiche les projets dans la galerie*/
     displayBtnFilter(resultsCategoriesJson);
-
+    filterButtons();
+ 
   } catch (error) {
-    /*console.error(error.message);*/
+    console.error(error.message);
   }
 }
 getCategories ();
@@ -90,19 +101,39 @@ function displayBtnFilter (resultsCategoriesJson) {
   /*** creation btn "Tous/All" ***/
   const btnAll = document.createElement("button");
   btnAll.innerText = "Tous";
+  btnAll.dataset.name = "Tous";
   btnAll.dataset.id = "0";
   sectionFilters.appendChild(btnAll);
 
   /* creation btn pour chaque categorie*/
   resultsCategoriesJson.forEach(categories=> {
   const btnFilter = document.createElement("button");
+  btnFilter.dataset.name = categories.name;
   btnFilter.dataset.id = categories.id;
   btnFilter.innerText = categories.name;
-
   /* on ajoute le bouton au container*/
   sectionFilters.appendChild(btnFilter);
   });
-
 }
 
 
+/**fonction filtre par nom categories*/
+function filterByCategoryName(name) {
+  if (name === "Tous") return works;
+
+  const donneesFiltrées = works.filter (item => item.category.name === name);
+  return donneesFiltrées;
+}
+
+/******** 7. AJOUT DES EVENT LISTENERS ************/
+function filterButtons() {
+  const buttons = document.querySelectorAll(".sectionFilters button");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+    const categoryName = button.dataset.name;
+    const projetsFiltres = filterByCategoryName(categoryName);
+    displayGallery(projetsFiltres);
+    });
+  });
+}
