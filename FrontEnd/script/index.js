@@ -12,11 +12,7 @@ async function getData() {
       throw new Error(`Response status: ${response.status}`);
     }
     /*Données/réponses retournées par l'API */
-    const resultsJson = await response.json();
-    /*console.log(resultsJson);
-
-    // On stocke les projets globalement */
-    works = resultsJson;
+    works = await response.json();
 
     /*Enleve l'affichage des éléments dans la galerie Projet */
     document.querySelector(".gallery").innerHTML = "";
@@ -71,7 +67,6 @@ async function getCategories() {
     }
     /*Données/réponses retournées par l'API */
     const resultsCategoriesJson = await response.json();
-    /*console.log(resultsCategoriesJson);
 
     /*On affiche les projets dans la galerie*/
     displayBtnFilter(resultsCategoriesJson);
@@ -102,7 +97,7 @@ function displayBtnFilter (resultsCategoriesJson) {
   const btnAll = document.createElement("button");
   btnAll.innerText = "Tous";
   btnAll.dataset.name = "Tous";
-  btnAll.dataset.id = "0";
+  btnAll.dataset.id = 0;
   sectionFilters.appendChild(btnAll);
 
   /* creation btn pour chaque categorie*/
@@ -118,18 +113,19 @@ function displayBtnFilter (resultsCategoriesJson) {
 
 
 /**fonction filtre par nom categories*/
-function filterByCategoryName(name) {
-  if (name === "Tous") return works;
-
-  const donneesFiltrées = works.filter (item => item.category.name === name);
+function filterByCategoryId(id) {
+  if (id === 0) return works;
+  const donneesFiltrées = works.filter (item => item.category.id === id);
   return donneesFiltrées;
 }
+
 /***********************************************/
 /******** AJOUT DES EVENT LISTENERS ************/
 function filterButtons() {
   const buttons = document.querySelectorAll(".sectionFilters button");
 
-  buttons.forEach(button => {    
+  buttons.forEach(button => { 
+   
     button.addEventListener("click", () => {
 
       // Retire la classe active de tous les boutons
@@ -137,10 +133,10 @@ function filterButtons() {
       // Active le bouton cliqué
       button.classList.add("active");
 
-      const categoryName = button.dataset.name;
-      const projetsFiltres = filterByCategoryName(categoryName);
+      const categoryId = Number(button.dataset.id);
+      const projetsFiltres = filterByCategoryId(categoryId);
       displayGallery(projetsFiltres);
-      /*console.log(projetsFiltres);*/
+      console.log(categoryId);
       });
   });
 }
