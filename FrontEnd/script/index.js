@@ -129,11 +129,18 @@ function filterByCategoryName(name) {
 function filterButtons() {
   const buttons = document.querySelectorAll(".sectionFilters button");
 
-  buttons.forEach(button => {
+  buttons.forEach(button => {    
     button.addEventListener("click", () => {
-    const categoryName = button.dataset.name;
-    const projetsFiltres = filterByCategoryName(categoryName);
-    displayGallery(projetsFiltres);
-    });
+
+      // Retire la classe active de tous les boutons
+      buttons.forEach(btn => btn.classList.remove("active"));
+      // Active le bouton cliqué
+      button.classList.add("active");
+
+      const categoryName = button.dataset.name;
+      const projetsFiltres = filterByCategoryName(categoryName);
+      displayGallery(projetsFiltres);
+      /*console.log(projetsFiltres);*/
+      });
   });
 }
