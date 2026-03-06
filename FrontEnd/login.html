@@ -29,15 +29,20 @@
       <section id="login">
         <h2>Log In</h2>
 
-        <form action="#" method="post">
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email" />
-          <label for="">Mot de passe</label>
-          <input name="mot_de_passe" id="mot_de_passe"></input>
-          <input type="submit" value="Envoyer" />
+        <form action="#" method="post" id="login_form">
+          <label for="login_email">Email</label>
+          <input type="email" name="login_email" id="login_email" required />
+          <label for="login_password">Mot de passe</label>
+          <input
+            type="password"
+            name="login_password"
+            id="login_password"
+            required
+          />
+          <input type="submit" value="Se connecter" id="submit_login_button" />
         </form>
 
-        <a href="" class="motdepasse_oublié">Mot de passe oublié</a>
+        <p><a href="" class="forgotten_password">Mot de passe oublié</a></p>
       </section>
     </main>
 

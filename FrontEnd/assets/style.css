@@ -53,6 +53,7 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 	cursor: pointer;
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
