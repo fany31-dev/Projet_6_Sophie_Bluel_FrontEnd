@@ -20,7 +20,7 @@ async function connexionUtilisateur (event) {
 
     if(response.ok) {
     console.log("Vous etes connectés !!")
-    console.log(resultat);
+
 
     // Stockage du token  
     localStorage.setItem("token",resultat.token);
