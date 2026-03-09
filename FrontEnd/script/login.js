@@ -23,8 +23,8 @@ async function connexionUtilisateur (event) {
     console.log(resultat);
 
     // Stockage du token  
-    localStorage.setItem("authToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4");
-
+    localStorage.setItem("token",resultat.token);
+    
   } else {
     /*creation message erreur*/
     const errorMsg = document.createElement ("div");
