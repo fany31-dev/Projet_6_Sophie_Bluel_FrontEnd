@@ -278,3 +278,13 @@ footer nav ul {
 	color: inherit;
 }
 
+.error-login {
+width: 325px;
+height: 25px;
+color: #D8000C;
+background-color: #FFBABA;
+padding: 5px;
+border : 1px solid #c97272;
+text-align: center;
+align-content: center;
+}

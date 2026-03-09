@@ -22,8 +22,16 @@ async function connexionUtilisateur (event) {
     console.log("Vous etes connectés !!")
     console.log(resultat);
 
+    // Stockage du token  
+    localStorage.setItem("authToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4");
+
   } else {
-    alert("Erreur dans l’identifiant ou le mot de passe");
+    /*creation message erreur*/
+    const errorMsg = document.createElement ("div");
+    errorMsg.className = "error-login"
+    errorMsg.innerText = "Erreur dans l’identifiant ou le mot de passe";
+    login_form.prepend(errorMsg);
+    /***********************/
   }
 
   } catch (error) {
