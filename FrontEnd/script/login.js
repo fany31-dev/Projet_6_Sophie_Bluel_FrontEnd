@@ -18,12 +18,14 @@ async function connexionUtilisateur (event) {
 
     const resultat = await response.json();
 
-    if(response.ok) {
-    console.log("Vous etes connectés !!")
-
+    if(response.ok && resultat.token) {
+    /*console.log("Vous etes connectés !!")*/
 
     // Stockage du token  
     localStorage.setItem("token",resultat.token);
+
+    // Redirection
+    window.location.href = "index.html";
     
   } else {
     /*creation message erreur*/
