@@ -151,7 +151,6 @@ function displayBanner() {
   document.body.prepend(banniereModeEdition);
 }
 
-
 function replaceLinkLogin() {
   // Affiche "Logout" à la place de "Login"
   const lienLogin = document.querySelector(".lien-login");
@@ -159,6 +158,12 @@ function replaceLinkLogin() {
   const lienLogout = document.createElement("a");
   lienLogout.className = "lien-logout";
   lienLogout.textContent = "Logout";
+  lienLogout.href = "index.html";
+
+  lienLogout.addEventListener("click", function (event) {
+    localStorage.removeItem("token");
+    window.location.href = "index.html";
+  });
 
   lienLogin.replaceWith(lienLogout);
 }
