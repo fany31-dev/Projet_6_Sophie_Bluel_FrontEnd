@@ -39,10 +39,7 @@ async function connexionUtilisateur (event) {
   } catch (error) {
     console.error("Erreur API :", error);
   }
-  
 };
-
-
 
 
 

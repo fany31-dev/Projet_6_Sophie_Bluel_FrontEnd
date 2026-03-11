@@ -136,7 +136,43 @@ function filterButtons() {
       const categoryId = Number(button.dataset.id);
       const projetsFiltres = filterByCategoryId(categoryId);
       displayGallery(projetsFiltres);
-      console.log(categoryId);
+      /*console.log(categoryId);*/
       });
   });
 }
+
+/**************************creation de la nouvelle page index.html apres connexion*******************/
+
+function displayBanner() {
+  // Affichage de la bannière d'édition
+  const banniereModeEdition = document.createElement("div");
+  banniereModeEdition.className = "banner";
+  banniereModeEdition.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>';
+  document.body.prepend(banniereModeEdition);
+}
+
+
+function replaceLinkLogin() {
+  // Affiche "Logout" à la place de "Login"
+  const lienLogin = document.querySelector(".lien-login");
+
+  const lienLogout = document.createElement("a");
+  lienLogout.className = "lien-logout";
+  lienLogout.textContent = "Logout";
+
+  lienLogin.replaceWith(lienLogout);
+}
+
+function pageModeEdition() {
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+
+    if (token) {
+      displayBanner();
+      replaceLinkLogin();
+    };
+  });
+}
+
+pageModeEdition();
