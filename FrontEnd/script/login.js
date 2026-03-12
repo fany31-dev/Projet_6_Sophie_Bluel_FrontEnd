@@ -3,7 +3,7 @@ const formulaireLogin = document.getElementById("login_form");
 formulaireLogin.addEventListener("submit", connexionUtilisateur);
 
 /* fonction connexion login utilisateur */
-async function connexionUtilisateur (event) {
+async function connexionUtilisateur(event) {
   event.preventDefault(); // bloque le comportement du navigateur
 
   const userEmail = document.getElementById("login_email").value;
@@ -18,23 +18,23 @@ async function connexionUtilisateur (event) {
 
     const resultat = await response.json();
 
-    if(response.ok && resultat.token) {
-    /*console.log("Vous etes connectés !!")*/
+    if (response.ok && resultat.token) {
+      /*console.log("Vous etes connectés !!")*/
 
-    // Stockage du token  
-    localStorage.setItem("token",resultat.token);
+      // Stockage du token  
+      localStorage.setItem("token", resultat.token);
 
-    // Redirection
-    window.location.href = "index.html";
-    
-  } else {
-    /*creation message erreur*/
-    const errorMsg = document.createElement ("div");
-    errorMsg.className = "error-login"
-    errorMsg.innerText = "Erreur dans l’identifiant ou le mot de passe";
-    login_form.prepend(errorMsg);
-    /***********************/
-  }
+      // Redirection
+      window.location.href = "index.html";
+
+    } else {
+      /*creation message erreur*/
+      const errorMsg = document.createElement("div");
+      errorMsg.className = "error-login"
+      errorMsg.innerText = "Erreur dans l’identifiant ou le mot de passe";
+      login_form.prepend(errorMsg);
+      /***********************/
+    }
 
   } catch (error) {
     console.error("Erreur API :", error);

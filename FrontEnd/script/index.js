@@ -1,6 +1,7 @@
-/** variable globale works */
+/** variables globales */
 
 let works = [];
+let token = localStorage.getItem("token");
 
 /**********récupération des données GET/WORKS depuis l'API *******/
 async function getData() {
@@ -24,7 +25,6 @@ async function getData() {
     console.error(error.message);
   }
 }
-
 getData ();
 
 
@@ -53,7 +53,6 @@ function displayGallery (works) {
     sectionProjet.appendChild(figure);
   });
 }
-
 
 /**********************************************************************/
 /**********récupération des données GET/categories depuis l'API *******/
@@ -109,6 +108,11 @@ function displayBtnFilter (resultsCategoriesJson) {
   /* on ajoute le bouton au container*/
   sectionFilters.appendChild(btnFilter);
   });
+
+  // Si mode édition → on cache immédiatement
+  if (token) {
+    sectionFilters.style.display = "none";
+  }
 }
 
 
@@ -144,7 +148,7 @@ function filterButtons() {
 /**************************creation de la nouvelle page index.html apres connexion*******************/
 
 function displayBanner() {
-  // Affichage de la bannière d'édition
+  // Affichage de la bannière d'édition//
   const banniereModeEdition = document.createElement("div");
   banniereModeEdition.className = "banner";
   banniereModeEdition.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>';
@@ -152,7 +156,7 @@ function displayBanner() {
 }
 
 function replaceLinkLogin() {
-  // Affiche "Logout" à la place de "Login"
+  // Affiche "Logout" à la place de "Login"//
   const lienLogin = document.querySelector(".lien-login");
 
   const lienLogout = document.createElement("a");
@@ -168,16 +172,43 @@ function replaceLinkLogin() {
   lienLogin.replaceWith(lienLogout);
 }
 
+// affichage de la div modifier//
+function displayModifier () {
+
+  const titleGallery = document.querySelector(".title-projet");
+  const portfolio = document.querySelector("#portfolio");
+
+  /*** creation de l'element modifier à coté de Mon projet ***/
+  const containerIconeModifier = document.createElement("div");
+  containerIconeModifier.className = "section-modifier";
+ 
+  const icone = document.createElement ("i");
+  icone.className = "icone-modifier";
+  icone.classList.add("fa-regular", "fa-pen-to-square");
+
+  const textModifier = document.createElement ("p");
+  textModifier.className = "text-modifier";
+  textModifier.textContent = " modifier";
+
+  containerIconeModifier.appendChild(icone);
+  containerIconeModifier.appendChild(textModifier);
+  portfolio.appendChild(containerIconeModifier);
+
+  // Ajout à côté du titre
+  titleGallery.insertAdjacentElement("afterend", containerIconeModifier);
+}
+
+
+/**********************************************/
+
 function pageModeEdition() {
 
   document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem("token");
-
     if (token) {
       displayBanner();
       replaceLinkLogin();
+      displayModifier ();
     };
   });
 }
-
 pageModeEdition();
