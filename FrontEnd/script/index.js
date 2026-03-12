@@ -165,6 +165,7 @@ function replaceLinkLogin() {
   lienLogout.href = "index.html";
 
   lienLogout.addEventListener("click", function (event) {
+    event.preventDefault(); // bloque le comportement du navigateur
     localStorage.removeItem("token");
     window.location.href = "index.html";
   });
