@@ -56,15 +56,23 @@
       <section id="portfolio">
         <h2 class="title-projet">Mes Projets</h2>
 
-        <a href="#modal1"></a>
+        <!--genere dynamiquement avec js <a class="js-modal" href="#modal1"></a> -->
         <aside
           id="modal1"
           class="modal"
           aria-hidden="true"
           role="dialog"
           arie-labelledby="modal-title"
+          style="display: none"
         >
-          <div class="modal-wrapper">
+          <div class="modal-wrapper js-modal-stop">
+            <div
+              id="js-close-Modal"
+              class="js-modal-close"
+              aria-label="fermer la modale"
+            >
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </div>
             <h3 id="modal-title">Galerie photo</h3>
             <div class="modal-photo-gallery"></div>
             <button>Ajouter une photo</button>
