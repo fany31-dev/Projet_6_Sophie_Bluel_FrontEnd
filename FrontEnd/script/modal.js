@@ -32,12 +32,15 @@ function stopPropagation(e) {
   e.stopPropagation ()
 }
 
-// console.log(document.getElementsByClassName("js-modal"))
-
-    document.addEventListener("DOMContentLoaded", () => {
-    const buttonModal = document.querySelectorAll(".js-modal");
+document.addEventListener("DOMContentLoaded", () => {
+  const buttonModal = document.querySelectorAll(".js-modal");
     buttonModal.forEach(btn => {
-      btn.addEventListener("click", openModal)
-
-    });
+    btn.addEventListener("click", openModal)
   });
+});
+
+window.addEventListener("keydown", function (e) {
+  if(e.key === "Escape" || e.key === "Esc") {
+    closeModal (e)
+  }
+})
