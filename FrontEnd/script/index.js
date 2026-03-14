@@ -179,10 +179,11 @@ function displayModifier () {
   const titleGallery = document.querySelector(".title-projet");
   const portfolio = document.querySelector("#portfolio");
 
-  /*** creation de l'element modifier à coté de Mon projet ***/
-  const containerIconeModifier = document.createElement("div");
-  containerIconeModifier.className = "section-modifier";
- 
+  /*** creation de l'element modifier open-modal à cote de Mon projet ***/
+  const containerIconeModifier = document.createElement("a");
+  containerIconeModifier.className = "js-modal";
+  containerIconeModifier.href = "#modal1";
+   
   const icone = document.createElement ("i");
   icone.className = "icone-modifier";
   icone.classList.add("fa-regular", "fa-pen-to-square");
