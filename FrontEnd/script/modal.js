@@ -1,6 +1,32 @@
 
 let modal = null
 
+/***************creation des elements figure dans la modale *****************/
+function setFigureModal (works) {
+
+  const sectionModal = document.querySelector(".modal-photo-gallery")
+
+  works.forEach(work=> {
+    const figureModal = document.createElement("figure");
+
+    /* creation image*/
+    const imageElement = document.createElement("img");
+    imageElement.src = work.imageUrl;
+    imageElement.alt = work.title;
+    imageElement.className = "projet-modal";
+
+    // /* creation poubelle */
+    const btnDelete = document.createElement("button");
+    btnDelete.className = "supp-projet";
+    btnDelete.innerHTML ='<i class="fa-solid fa-trash-can"></i>';
+
+    /*Ajout dans gallery et figure*/
+    figureModal.appendChild(imageElement);
+    figureModal.appendChild(btnDelete);
+    sectionModal.appendChild(figureModal);
+  });
+}
+
 /***************ouverture de la modale *****************/
 function openModal (event) {
     event.preventDefault ();

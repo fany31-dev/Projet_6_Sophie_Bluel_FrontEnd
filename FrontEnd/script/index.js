@@ -20,6 +20,7 @@ async function getData() {
     
     /*On affiche les projets dans la galerie*/
     displayGallery(works);
+    setFigureModal(works);
 
   } catch (error) {
     console.error(error.message);
