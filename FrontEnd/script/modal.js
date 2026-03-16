@@ -111,12 +111,16 @@ window.addEventListener("keydown", function (e) {
 /*****************ouverture de la modale 1 vers la modale 2 */
 const modal1 = document.getElementById("modal1");
 const modal2 = document.getElementById("modal2");
-const openModal2 = document.getElementById("openModal2")
+const openModal2 = document.getElementById("openModal2");
 
 // Bouton dans la modale 1 pour ouvrir la modale 2
 document.getElementById("openModal2").addEventListener("click", () => {
   modal1.style.display = "none";
   modal2.style.display = null;
+});
+
+document.querySelector("#modal1 .js-modal-close").addEventListener("click", () => {
+modal1.style.display = "none";
 });
 
 document.querySelector("#modal2 .js-modal-close").addEventListener("click", () => {
