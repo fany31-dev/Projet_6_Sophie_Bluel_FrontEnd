@@ -53,6 +53,7 @@
           </p>
         </article>
       </section>
+
       <section id="portfolio">
         <h2 class="title-projet">Mes Projets</h2>
 
@@ -62,19 +63,20 @@
           class="modal"
           aria-hidden="true"
           role="dialog"
-          arie-labelledby="modal-title"
+          aria-labelledby="modal-title"
           style="display: none"
         >
           <div class="modal-wrapper js-modal-stop">
-            <div
+            <button
               id="js-close-Modal"
-              class="js-modal-close"
+              class="js-modal-close btn-close"
               aria-label="fermer la modale"
             >
-              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-            </div>
+              <i class="fa-solid fa-xmark"></i>
+            </button>
             <h3 id="modal-title">Galerie photo</h3>
             <div class="modal-photo-gallery"></div>
+
             <button class="btn-ajouter">Ajouter une photo</button>
           </div>
         </aside>
@@ -156,6 +158,7 @@
           </figure>
         </div>
       </section>
+
       <section id="contact">
         <h2>Contact</h2>
         <p>Vous avez un projet ? Discutons-en !</p>
