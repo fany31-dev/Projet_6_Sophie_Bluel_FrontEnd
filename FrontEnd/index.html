@@ -75,6 +75,7 @@
               <i class="fa-solid fa-xmark"></i>
             </button>
             <h3 id="modal-title">Galerie photo</h3>
+
             <div class="modal-photo-gallery"></div>
 
             <button id="openModal2" class="btn-ajouter">
@@ -115,27 +116,29 @@
                   <div class="icone-ajout-image">
                     <i class="fa-regular fa-image"></i>
                   </div>
-                  <label for="file">+ Ajouter photo</label>
-                  <input
+                  <button class="btn-add-photo">
+                    <label for="file">+ Ajouter photo</label>
+                  </button>
+                  <!-- <input
                     type="file"
                     id="file"
                     name="file"
                     accept="image/png, image/jpeg"
-                  />
+                  /> -->
                   <p class="format">jpg, png : 4mo max</p>
                 </div>
 
                 <div>
-                  <label for="title">Titre</label><br />
-                  <input type="text" name="title" id="title" /><br />
+                  <label class="title-label" for="title">Titre</label>
+                  <input type="text" name="title" id="title" />
                 </div>
 
                 <div>
-                  <label for="category">Catégorie</label>
+                  <label class="title-label" for="category">Catégorie</label>
                   <select name="category" id="category">
-                    <option value="1">Objets</option>
+                    <!--genere avec API <option value="1">Objets</option>
                     <option value="2">Appartements</option>
-                    <option value="3">Hotels & restaurants</option>
+                    <option value="3">Hotels & restaurants</option> -->
                   </select>
                 </div>
               </form>
