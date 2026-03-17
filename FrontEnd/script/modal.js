@@ -32,15 +32,16 @@ function setFigureModal (works) {
 /***************ouverture de la modale *****************/
 function openModal (event) {
     event.preventDefault ();
+
     const selector = event.currentTarget.getAttribute("href");
     const target = document.querySelector(selector);
-    target.style.display = null;
-    target.removeAttribute("aria-hidden");
-    target.setAttribute("aria-modal", "true");
-    modal = target
+    modal = target;
     focusables = Array.from(modal.querySelectorAll(focusableSelector));
-    focusables[0].focus();
     previsouslyFocusedElement = document.querySelector(":focus");
+    focusables[0].focus();
+    modal.style.display = null;
+    modal.removeAttribute("aria-hidden");
+    modal.setAttribute("aria-modal", "true");
     modal.addEventListener("click", closeModal)
     modal.querySelector(".js-modal-close").addEventListener("click", closeModal)
     modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation)
@@ -49,19 +50,16 @@ function openModal (event) {
 /***************fermeture de la modale *****************/
 function closeModal (event) {
   if (modal === null) return
-    if(previsouslyFocusedElement !==null) previsouslyFocusedElement.focus();
-    event.preventDefault ();
-    modal.setAttribute("aria-hidden", "true");
-    modal.removeAttribute("aria-modal");
-    modal.removeEventListener("click", closeModal)
-    modal.querySelector(".js-modal-close").removeEventListener("click", closeModal)
-    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation)
-    const hideModal = function () {
-      modal.style.display = "none";
-      modal.removeEventListener("animationend", hideModal);
-      modal = null  
-    };
-    modal.addEventListener("animationend", hideModal);
+  /*if(previsouslyFocusedElement !==null) previsouslyFocusedElement.focus();*/
+  event.preventDefault ();
+  modal.style.display = "none";
+  modal.setAttribute("aria-hidden", "true");
+  modal.removeAttribute("aria-modal");
+
+  modal.removeEventListener("click", closeModal);
+  modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
+  modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+  modal = null;
 }
 
 function stopPropagation(e) {
@@ -76,7 +74,6 @@ function focusInModal(e) {
     if (e.key === "Shift") {
       index--;
     } else {
-    if (e.key === "Tab")
       index++;
     }
     if (index >= focusables.length) {
@@ -88,7 +85,6 @@ function focusInModal(e) {
     focusables[index].focus();
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const buttonModal = document.querySelectorAll(".js-modal");
     buttonModal.forEach(btn => {
@@ -98,36 +94,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("keydown", function (e) {
   if(e.key === "Escape" || e.key === "Esc") {
-    closeModal (e)
+    closeModal(e);
   }
   if (e.key === "Tab" && modal !== null) {
-    focusInModal(e)
+    focusInModal(e);
   }
   if (e.key === "Shift" && modal !== null) {
-    focusInModal(e)
+    focusInModal(e);
   }
 });
 
-/*****************ouverture de la modale 1 vers la modale 2 */
+ /*****************ouverture de la modale 1 vers la modale 2 */
 const modal1 = document.getElementById("modal1");
 const modal2 = document.getElementById("modal2");
 const openModal2 = document.getElementById("openModal2");
 
-// Bouton dans la modale 1 pour ouvrir la modale 2
+/*** Bouton dans la modale 1 pour ouvrir la modale 2 **/
 document.getElementById("openModal2").addEventListener("click", () => {
   modal1.style.display = "none";
   modal2.style.display = null;
 });
 
-document.querySelector("#modal1 .js-modal-close").addEventListener("click", () => {
-modal1.style.display = "none";
-});
-
 document.querySelector("#modal2 .js-modal-close").addEventListener("click", () => {
-modal2.style.display = "none";
+  modal2.style.display = "none";
+  modal1.style.display = "none";
 });
 
 document.querySelector("#modal2 .js-modal-back").addEventListener("click", () => {
-modal2.style.display = "none";
-modal1.style.display = null; // retour à la modale 1
+  modal2.style.display = "none";
+  modal1.style.display = null; // retour à la modale 1
 });
