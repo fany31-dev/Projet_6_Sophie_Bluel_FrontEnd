@@ -1,5 +1,4 @@
 /** variables globales */
-
 let works = [];
 let token = localStorage.getItem("token");
 
@@ -52,6 +51,39 @@ function displayGallery (works) {
     figure.appendChild(imageElement);
     figure.appendChild(titleElement);
     sectionProjet.appendChild(figure);
+  });
+}
+
+/***************creation des elements figure dans la modale *****************/
+function setFigureModal (works) {
+
+  const sectionModal = document.querySelector(".modal-photo-gallery")
+
+  works.forEach(work=> {
+    const figureModal = document.createElement("figure");
+    figureModal.id = work.id;
+
+    /* creation image*/
+    const imageElement = document.createElement("img");
+    imageElement.src = work.imageUrl;
+    imageElement.alt = work.title;
+    imageElement.className = "projet-modal";
+
+    // /* creation poubelle */
+    const btnDelete = document.createElement("button");
+    btnDelete.className = "supp-projet";
+    btnDelete.innerHTML ='<i class="fa-solid fa-trash-can"></i>';
+
+    // Ajout de l’event listener ici
+    btnDelete.addEventListener("click", (e) => {
+    deleteWork(e, work.id, figureModal);
+    console.log("Suppression du projet", work.id);
+    });
+
+    /*Ajout dans gallery et figure*/
+    figureModal.appendChild(imageElement);
+    figureModal.appendChild(btnDelete);
+    sectionModal.appendChild(figureModal);
   });
 }
 
