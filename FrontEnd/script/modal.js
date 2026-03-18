@@ -126,3 +126,34 @@ document.querySelector("#modal2 .js-modal-back").addEventListener("click", () =>
   closeModal();          // ferme modal2
   openModalById("modal1"); // rouvre modal1 proprement
 });
+
+/******** suppression des travaux dans la modale *************/
+async function deleteWork(event, id) {
+  event.preventDefault();
+  const urlDelete = "http://localhost:5678/api/works/";
+  
+  try {
+    const response = await fetch (urlDelete + id, {
+      method:"DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de la suppression du projet");
+    }
+
+    console.log("Projet supprimé :", id);
+
+    /*retirer l’élément du DOM après suppression*/
+    figure.remove();
+
+    /*Mise à jour de la galerie principale*/
+    getData();
+   
+  } catch (error) {
+    console.error(error);
+  }
+}
