@@ -459,7 +459,7 @@ footer nav ul {
 
 .container-photo {
 	width: 420px;
-	height: 400px;
+	height: 430px;
 }
 
 .container-add-photo {
@@ -487,6 +487,8 @@ footer nav ul {
 	background-color: #CBD6DC;
 	border-radius: 60px;
 	border: none;
+	text-align: center;
+	align-content: center;
 }
 
 .format {
@@ -494,12 +496,22 @@ footer nav ul {
 	color: #444444;
 }
 
-#title,
+#titleInput,
 #category {
 	width: 420px;
 	height: 51px;
 	border: none;
 	box-shadow: 0px 4px 14px 0px #00000017;
+	margin-top: 10px;
+}
+
+.title-label{
+	margin: 2em 0 1em 0;
+	color: #3D3D3D;
+}
+
+.rub-form{
+	padding-top: 10px;
 }
 
 input[type="submit"].btn-envoyer {
@@ -513,6 +525,7 @@ input[type="submit"].btn-envoyer {
 	height: 36px;
 	background-color: #A7A7A7;
 	border: none;
+	padding: 5px;
 	margin: 1em auto;
 }
 
