@@ -137,11 +137,11 @@ async function deleteWork(event, id) {
       method:"DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        "Authorization": `Bearer ${localStorage.getItem("authtoken")}`
       },
     });
 
-    if (!response.ok) {
+if (!response.ok) {
       throw new Error("Erreur lors de la suppression du projet");
     }
 
@@ -157,3 +157,58 @@ async function deleteWork(event, id) {
     console.error(error);
   }
 }
+
+/******** visualisation de l'image preview */
+const imageInput = document.getElementById("imageInput");
+const previewImage = document.getElementById("preview-image");
+const containerPhoto = document.getElementById("container-photo");
+
+imageInput.addEventListener("change", function () {
+  const file = this.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+      previewImage.src = this.result;
+      previewImage.style.display = "block";
+
+      /*masque l'icône ou le conteneur vide*/
+      containerPhoto.style.display = "none";
+    });
+
+    reader.readAsDataURL(file);
+  }
+});
+/* si erreur dans le choix de la photo on reclick sur l'image et on peut la changer*/
+previewImage.addEventListener("click", () => {
+  imageInput.click();
+});
+
+
+/*****appel api pour recuperer categorie dans formulaire ***/
+async function loadCategories() {
+  try {
+    const response = await fetch("http://localhost:5678/api/categories");
+    const categories = await response.json();
+    setCategoryForm(categories);
+  } catch (error) {
+    console.error("Erreur chargement catégories :", error);
+  }
+}
+loadCategories();
+
+/*** rempli selecteur categorie dans form ***/
+function setCategoryForm(categories) {
+
+  const sectionCategory = document.querySelector("#category");
+  sectionCategory.innerHTML = "";
+
+  categories.forEach(cat=> {
+  const optionCategory = document.createElement("option");
+  optionCategory.value = cat.id;
+  optionCategory.textContent = cat.name;
+  /* on ajoute le bouton au container*/
+  sectionCategory.appendChild(optionCategory);
+  });
+}                  
