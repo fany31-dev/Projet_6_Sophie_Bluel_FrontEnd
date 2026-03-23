@@ -137,7 +137,7 @@ async function deleteWork(event, id) {
       method:"DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("authtoken")}`
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
     });
 
@@ -211,4 +211,57 @@ function setCategoryForm(categories) {
   /* on ajoute le bouton au container*/
   sectionCategory.appendChild(optionCategory);
   });
-}                  
+}   
+
+ /************************envoyer des projets **************/
+const form = document.querySelector(".add-photo");
+const btnValider = document.querySelector(".btn-envoyer");
+
+btnValider.addEventListener("click", async (event) => {
+  event.preventDefault(); // Empêche le rechargement de la page
+  const image = document.querySelector("#imageInput").files[0];
+  const title = document.querySelector("#titleInput").value;
+  const category = document.querySelector("#category").value;
+
+  // Validation simple côté client
+  if (!image || !title || !category) {
+    event.preventDefault(); // Empêche le rechargement de la page
+    /*creation message erreur*/
+    const errorMsgForm = document.createElement("div");
+    errorMsgForm.className = "error-Form"
+    errorMsgForm.innerText = "Veuillez remplir tous les champs !";
+    form.prepend(errorMsgForm);
+    return;
+  }
+
+    // Construction du FormData
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("title", title);
+    formData.append("category", category);
+
+    try {
+        // Envoi POST vers l'API
+        const response = await fetch("http://localhost:5678/api/works", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+          body: formData
+        })
+   
+        if (!response.ok) {
+          throw new Error(`Erreur serveur : ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("Projet ajouté :", result);
+
+        //reset du formulaire
+        form.reset();
+
+      } catch (error) {
+    console.error(error);
+   }
+});
+
