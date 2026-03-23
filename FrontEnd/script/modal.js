@@ -8,11 +8,8 @@ const modal2 = document.querySelector("#modal2");
 const openModal2 = document.getElementById("openModal2");
 
 /***************ouverture de la modale *****************/
-function openModal (event) {
-    event.preventDefault ();
 
-    const selector = event.currentTarget.getAttribute("href");
-    const target = document.querySelector(selector);
+function showModal(target) {
     modal = target;
 
     focusables = Array.from(modal.querySelectorAll(focusableSelector));
@@ -25,29 +22,24 @@ function openModal (event) {
 
     focusables[0]?.focus();
 
-    modal.addEventListener("click", closeModal)
-    modal.querySelector(".js-modal-close").addEventListener("click", closeModal)
-    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation)
+    modal.addEventListener("click", closeModal);
+    modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
 }
 
-/***************ouverture avec id *****************/
+/***************ouverture modale 1******************** */
+function openModal(event) {
+    event.preventDefault();
+    const selector = event.currentTarget.getAttribute("href");
+    const target = document.querySelector(selector);
+    showModal(target);
+}
+
+/**********ouverture modale 2************************** */
+
 function openModalById(id) {
-  const target = document.getElementById(id);
-  modal = target;
-
-  focusables = Array.from(modal.querySelectorAll(focusableSelector));
-  previsouslyFocusedElement = document.querySelector(":focus");
-
-  modal.style.display = null;
-  modal.removeAttribute("aria-hidden");
-  modal.removeAttribute("inert");
-  modal.setAttribute("aria-modal", "true");
-
-  focusables[0]?.focus();
-
-  modal.addEventListener("click", closeModal);
-  modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
-  modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+    const target = document.getElementById(id);
+    showModal(target);
 }
 
 
@@ -144,8 +136,7 @@ async function deleteWork(event, id) {
 if (!response.ok) {
       throw new Error("Erreur lors de la suppression du projet");
     }
-
-    console.log("Projet supprimé :", id);
+    alert("Le projet a été supprimé avec succés.");
 
     /*retirer l’élément du DOM après suppression*/
     figure.remove();
@@ -180,7 +171,7 @@ imageInput.addEventListener("change", function () {
     reader.readAsDataURL(file);
   }
 });
-/* si erreur dans le choix de la photo on reclick sur l'image et on peut la changer*/
+/* si erreur dans le choix de la photo on reclick sur l'image pour changement*/
 previewImage.addEventListener("click", () => {
   imageInput.click();
 });
@@ -198,7 +189,7 @@ async function loadCategories() {
 }
 loadCategories();
 
-/*** rempli selecteur categorie dans form ***/
+/*** Remplir selecteur categorie dans form ***/
 function setCategoryForm(categories) {
 
   const sectionCategory = document.querySelector("#category");
@@ -213,7 +204,7 @@ function setCategoryForm(categories) {
   });
 }   
 
- /************************envoyer des projets **************/
+ /************************Envoyer des projets **************/
 const form = document.querySelector(".add-photo");
 const btnValider = document.querySelector(".btn-envoyer");
 
@@ -234,34 +225,34 @@ btnValider.addEventListener("click", async (event) => {
     return;
   }
 
-    // Construction du FormData
-    const formData = new FormData();
-    formData.append("image", image);
-    formData.append("title", title);
-    formData.append("category", category);
+      // Construction du FormData
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("title", title);
+      formData.append("category", category);
 
-    try {
-        // Envoi POST vers l'API
-        const response = await fetch("http://localhost:5678/api/works", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-          },
-          body: formData
-        })
+     try {
+         // Envoi POST vers l'API
+         const response = await fetch("http://localhost:5678/api/works", {
+           method: "POST",
+           headers: {
+             "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: formData
+          })
    
-        if (!response.ok) {
-          throw new Error(`Erreur serveur : ${response.status}`);
-        }
+          if (!response.ok) {
+            throw new Error(`Erreur serveur : ${response.status}`);
+          }
 
         const result = await response.json();
-        console.log("Projet ajouté :", result);
+        alert("Le projet a été ajouté avec succés.");
 
-        //reset du formulaire
-        form.reset();
+          //reset du formulaire
+           form.reset();
 
-      } catch (error) {
-    console.error(error);
-   }
+        } catch (error) {
+      console.error(error);
+     }
 });
 
