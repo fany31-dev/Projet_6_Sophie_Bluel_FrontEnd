@@ -1,6 +1,6 @@
 /** variables globales */
 let works = [];
-let token = localStorage.getItem("token");
+let token = sessionStorage.getItem("token");
 
 /**********récupération des données GET/WORKS depuis l'API *******/
 async function getData() {
