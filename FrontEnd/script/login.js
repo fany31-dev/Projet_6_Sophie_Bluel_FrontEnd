@@ -22,24 +22,32 @@ async function connexionUtilisateur(event) {
       /*console.log("Vous etes connectés !!")*/
 
       // Stockage du token  
-      localStorage.setItem("token", resultat.token);
+      sessionStorage.setItem("token", resultat.token);
 
       // Redirection
       window.location.href = "index.html";
 
     } else {
       /*creation message erreur*/
+    if (!formulaireLogin.querySelector(".error-login")) {
       const errorMsg = document.createElement("div");
       errorMsg.className = "error-login"
       errorMsg.innerText = "Erreur dans l’identifiant ou le mot de passe";
-      login_form.prepend(errorMsg);
-      /***********************/
+      formulaireLogin.prepend(errorMsg);
     }
-
+    return;
+    }
+        
   } catch (error) {
     console.error("Erreur API :", error);
   }
 };
+
+// Effacer le message d’erreur quand on re-clique dans le formulaire */
+login_form.addEventListener("click", () => {
+  const oldErrorMsg = login_form.querySelector(".error-login");
+  if (oldErrorMsg) oldErrorMsg.remove();
+});
 
 
 
