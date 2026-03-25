@@ -199,7 +199,7 @@ function replaceLinkLogin() {
 
   lienLogout.addEventListener("click", function (event) {
     event.preventDefault(); // bloque le comportement du navigateur
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     window.location.href = "index.html";
   });
 
