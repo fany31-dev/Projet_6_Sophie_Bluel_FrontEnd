@@ -47,26 +47,26 @@ function openModalById(id) {
 function closeModal() {
   if (!modal) return;
 
-  document.activeElement.blur(); // évite l’erreur aria-hidden
+    document.activeElement.blur(); // évite l’erreur aria-hidden
 
-  modal.style.display = "none";
-  modal.setAttribute("aria-hidden", "true");
-  modal.setAttribute("inert", "");
-  modal.removeAttribute("aria-modal");
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    modal.setAttribute("inert", "");
+    modal.removeAttribute("aria-modal");
 
-  modal.removeEventListener("click", closeModal);
-  modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
-  modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+    modal.removeEventListener("click", closeModal);
+    modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
+    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
 
   if (previsouslyFocusedElement) {
-    previsouslyFocusedElement.focus();
+     previsouslyFocusedElement.focus();
   }
 
-  modal = null;
+    modal = null;
 }
 
 function stopPropagation(e) {
-  e.stopPropagation ()
+    e.stopPropagation ()
 }
 
 /*************** GESTION DU FOCUS *************/
@@ -129,7 +129,7 @@ async function deleteWork(event, id) {
       method:"DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        "Authorization": `Bearer ${sessionStorage.getItem("token")}`
       },
     });
 
@@ -210,49 +210,56 @@ const btnValider = document.querySelector(".btn-envoyer");
 
 btnValider.addEventListener("click", async (event) => {
   event.preventDefault(); // Empêche le rechargement de la page
+
   const image = document.querySelector("#imageInput").files[0];
   const title = document.querySelector("#titleInput").value;
   const category = document.querySelector("#category").value;
 
   // Validation simple côté client
   if (!image || !title || !category) {
-    event.preventDefault(); // Empêche le rechargement de la page
-    /*creation message erreur*/
+    
+  /*creation message erreur*/
+  if (!form.querySelector(".error-Form")) {
     const errorMsgForm = document.createElement("div");
     errorMsgForm.className = "error-Form"
     errorMsgForm.innerText = "Veuillez remplir tous les champs !";
     form.prepend(errorMsgForm);
-    return;
+  }
   }
 
-      // Construction du FormData
-      const formData = new FormData();
-      formData.append("image", image);
-      formData.append("title", title);
-      formData.append("category", category);
+// Construction du FormData
+const formData = new FormData();
+   formData.append("image", image);
+   formData.append("title", title);
+   formData.append("category", category);
 
-     try {
-         // Envoi POST vers l'API
-         const response = await fetch("http://localhost:5678/api/works", {
-           method: "POST",
-           headers: {
-             "Authorization": `Bearer ${localStorage.getItem("token")}`
-            },
-            body: formData
-          })
+try {
+  // Envoi POST vers l'API
+    const response = await fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+    },
+    body: formData
+    });
    
-          if (!response.ok) {
-            throw new Error(`Erreur serveur : ${response.status}`);
-          }
+    if (!response.ok) {
+    throw new Error(`Erreur serveur : ${response.status}`);
+    }
 
-        const result = await response.json();
-        alert("Le projet a été ajouté avec succés.");
+    const result = await response.json();
+    alert("Le projet a été ajouté avec succés.");
 
-          //reset du formulaire
-           form.reset();
+    //reset du formulaire
+    form.reset();
 
-        } catch (error) {
-      console.error(error);
-     }
+  } catch (error) {
+    console.error(error);
+  }
 });
 
+// Effacer le message d’erreur quand on clique dans le formulaire
+form.addEventListener("click", () => {
+  const oldError = form.querySelector(".error-Form");
+  if (oldError) oldError.remove();
+});
