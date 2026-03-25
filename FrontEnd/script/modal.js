@@ -157,7 +157,12 @@ const containerPhoto = document.getElementById("container-photo");
 imageInput.addEventListener("change", function () {
   const file = this.files[0];
 
-  if (file) {
+  if (file && (file.type ==="image/jpeg" || file.type ==="image/png")) {
+
+    // Supprime le message d'erreur s'il existe
+    const error = form.querySelector(".error-Format");
+    if (error) error.remove();
+
     const reader = new FileReader();
 
     reader.addEventListener("load", function () {
@@ -169,11 +174,21 @@ imageInput.addEventListener("change", function () {
     });
 
     reader.readAsDataURL(file);
+  } else {
+    if (!form.querySelector(".error-Format")) {
+    const errorFormatImg = document.createElement("div");
+    errorFormatImg.className = "error-Format"
+    errorFormatImg.innerText = "Veuillez selectionner une image au format JPG ou PNG.";
+    form.prepend(errorFormatImg);
+    }
   }
-});
+  
+  });
+
 /* si erreur dans le choix de la photo on reclick sur l'image pour changement*/
 previewImage.addEventListener("click", () => {
   imageInput.click();
+  
 });
 
 
@@ -261,5 +276,7 @@ try {
 // Effacer le message d’erreur quand on clique dans le formulaire
 form.addEventListener("click", () => {
   const oldError = form.querySelector(".error-Form");
+  const oldErrorMsgImg = form.querySelector(".error-Form");
   if (oldError) oldError.remove();
+  if (oldErrorMsgImg) errorFormatImg.remove();
 });

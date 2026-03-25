@@ -281,9 +281,10 @@ footer nav ul {
 }
 
 .error-login,
-.error-Form {
+.error-Form,
+.error-Format {
 	width: 420px;
-	height: 40px;
+	height: 50px;
 	color: #D8000C;
 	background-color: #FFBABA;
 	padding: 5px;
