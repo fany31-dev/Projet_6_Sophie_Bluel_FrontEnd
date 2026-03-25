@@ -76,6 +76,7 @@ function setFigureModal (works) {
 
     // Ajout de l’event listener ici
     btnDelete.addEventListener("click", (e) => {
+    e.preventDefault(); // empêche la fermeture
     deleteWork(e, work.id, figureModal);
     console.log("Suppression du projet", work.id);
     });
@@ -173,7 +174,6 @@ function filterButtons() {
       const categoryId = Number(button.dataset.id);
       const projetsFiltres = filterByCategoryId(categoryId);
       displayGallery(projetsFiltres);
-      /*console.log(categoryId);*/
       });
   });
 }

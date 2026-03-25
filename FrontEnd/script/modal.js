@@ -159,10 +159,11 @@ imageInput.addEventListener("change", function () {
 
   if (file && (file.type ==="image/jpeg" || file.type ==="image/png")) {
 
-    // Supprime le message d'erreur s'il existe
+    // ** Supprime le message d'erreur**/
     const error = form.querySelector(".error-Format");
     if (error) error.remove();
 
+    //***chargement image ****/
     const reader = new FileReader();
 
     reader.addEventListener("load", function () {
@@ -174,7 +175,9 @@ imageInput.addEventListener("change", function () {
     });
 
     reader.readAsDataURL(file);
+
   } else {
+
     if (!form.querySelector(".error-Format")) {
     const errorFormatImg = document.createElement("div");
     errorFormatImg.className = "error-Format"
@@ -182,15 +185,12 @@ imageInput.addEventListener("change", function () {
     form.prepend(errorFormatImg);
     }
   }
-  
-  });
+});
 
 /* si erreur dans le choix de la photo on reclick sur l'image pour changement*/
 previewImage.addEventListener("click", () => {
   imageInput.click();
-  
 });
-
 
 /*****appel api pour recuperer categorie dans formulaire ***/
 async function loadCategories() {
@@ -276,7 +276,5 @@ try {
 // Effacer le message d’erreur quand on clique dans le formulaire
 form.addEventListener("click", () => {
   const oldError = form.querySelector(".error-Form");
-  const oldErrorMsgImg = form.querySelector(".error-Form");
   if (oldError) oldError.remove();
-  if (oldErrorMsgImg) errorFormatImg.remove();
 });
