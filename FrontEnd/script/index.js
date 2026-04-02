@@ -16,25 +16,22 @@ async function getData() {
 
     /*Enleve l'affichage des éléments dans la galerie Projet */
     document.querySelector(".gallery").innerHTML = "";
-    
+
     /*On affiche les projets dans la galerie*/
     displayGallery(works);
     setFigureModal(works);
-
   } catch (error) {
     console.error(error.message);
   }
 }
-getData ();
-
+getData();
 
 /********************Fonction affichage des projets dans Galerie */
-function displayGallery (works) {
-
+function displayGallery(works) {
   const sectionProjet = document.querySelector(".gallery");
   sectionProjet.innerHTML = "";
 
-  works.forEach(work=> {
+  works.forEach((work) => {
     /* creation des elements de la galerie Projet*/
     const figure = document.createElement("figure");
 
@@ -55,11 +52,11 @@ function displayGallery (works) {
 }
 
 /***************creation des elements figure dans la modale *****************/
-function setFigureModal (works) {
+function setFigureModal(works) {
+  const sectionModal = document.querySelector(".modal-photo-gallery");
+  sectionModal.innerHTML = "";
 
-  const sectionModal = document.querySelector(".modal-photo-gallery")
-
-  works.forEach(work=> {
+  works.forEach((work) => {
     const figureModal = document.createElement("figure");
     figureModal.id = work.id;
 
@@ -72,13 +69,13 @@ function setFigureModal (works) {
     // /* creation poubelle */
     const btnDelete = document.createElement("button");
     btnDelete.className = "supp-projet";
-    btnDelete.innerHTML ='<i class="fa-solid fa-trash-can"></i>';
+    btnDelete.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
     // Ajout de l’event listener ici
     btnDelete.addEventListener("click", (e) => {
-    e.preventDefault(); // empêche la fermeture
-    deleteWork(e, work.id, figureModal);
-    console.log("Suppression du projet", work.id);
+      deleteWork(e, work.id, figureModal);
+      getData();
+      console.log("Suppression du projet", work.id);
     });
 
     /*Ajout dans gallery et figure*/
@@ -104,22 +101,21 @@ async function getCategories() {
     /*On affiche les projets dans la galerie*/
     displayBtnFilter(resultsCategoriesJson);
     filterButtons();
- 
   } catch (error) {
     console.error(error.message);
   }
 }
-getCategories ();
+getCategories();
 
 /****************************************************************/
 /********************Fonction affichage des projets dans Galerie */
-function displayBtnFilter (resultsCategoriesJson) {
+function displayBtnFilter(resultsCategoriesJson) {
   /* recuperation de la section portfolio et gallery*/
   const portfolio = document.querySelector("#portfolio");
   const sectionProjet = document.querySelector(".gallery");
 
   /*** creation du container des Filtres ****/
-  const sectionFilters = document.createElement ("div");
+  const sectionFilters = document.createElement("div");
   sectionFilters.classList.add("sectionFilters");
 
   /* on ajoute le container à portfolio*/
@@ -134,13 +130,13 @@ function displayBtnFilter (resultsCategoriesJson) {
   sectionFilters.appendChild(btnAll);
 
   /* creation btn pour chaque categorie*/
-  resultsCategoriesJson.forEach(categories=> {
-  const btnFilter = document.createElement("button");
-  btnFilter.dataset.name = categories.name;
-  btnFilter.dataset.id = categories.id;
-  btnFilter.innerText = categories.name;
-  /* on ajoute le bouton au container*/
-  sectionFilters.appendChild(btnFilter);
+  resultsCategoriesJson.forEach((categories) => {
+    const btnFilter = document.createElement("button");
+    btnFilter.dataset.name = categories.name;
+    btnFilter.dataset.id = categories.id;
+    btnFilter.innerText = categories.name;
+    /* on ajoute le bouton au container*/
+    sectionFilters.appendChild(btnFilter);
   });
 
   // Si mode édition → on cache immédiatement
@@ -149,11 +145,10 @@ function displayBtnFilter (resultsCategoriesJson) {
   }
 }
 
-
 /**fonction filtre par nom categories*/
 function filterByCategoryId(id) {
   if (id === 0) return works;
-  const donneesFiltrées = works.filter (item => item.category.id === id);
+  const donneesFiltrées = works.filter((item) => item.category.id === id);
   return donneesFiltrées;
 }
 
@@ -162,19 +157,17 @@ function filterByCategoryId(id) {
 function filterButtons() {
   const buttons = document.querySelectorAll(".sectionFilters button");
 
-  buttons.forEach(button => { 
-   
+  buttons.forEach((button) => {
     button.addEventListener("click", () => {
-
       // Retire la classe active de tous les boutons
-      buttons.forEach(btn => btn.classList.remove("active"));
+      buttons.forEach((btn) => btn.classList.remove("active"));
       // Active le bouton cliqué
       button.classList.add("active");
 
       const categoryId = Number(button.dataset.id);
       const projetsFiltres = filterByCategoryId(categoryId);
       displayGallery(projetsFiltres);
-      });
+    });
   });
 }
 
@@ -184,7 +177,8 @@ function displayBanner() {
   // Affichage de la bannière d'édition//
   const banniereModeEdition = document.createElement("div");
   banniereModeEdition.className = "banner";
-  banniereModeEdition.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>';
+  banniereModeEdition.innerHTML =
+    '<p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>';
   document.body.prepend(banniereModeEdition);
 }
 
@@ -207,8 +201,7 @@ function replaceLinkLogin() {
 }
 
 // affichage de la div modifier//
-function displayModifier () {
-
+function displayModifier() {
   const titleGallery = document.querySelector(".title-projet");
   const portfolio = document.querySelector("#portfolio");
 
@@ -216,12 +209,12 @@ function displayModifier () {
   const containerIconeModifier = document.createElement("a");
   containerIconeModifier.className = "js-modal";
   containerIconeModifier.href = "#modal1";
-   
-  const icone = document.createElement ("i");
+
+  const icone = document.createElement("i");
   icone.className = "icone-modifier";
   icone.classList.add("fa-regular", "fa-pen-to-square");
 
-  const textModifier = document.createElement ("p");
+  const textModifier = document.createElement("p");
   textModifier.className = "text-modifier";
   textModifier.textContent = " modifier";
 
@@ -233,17 +226,15 @@ function displayModifier () {
   titleGallery.insertAdjacentElement("afterend", containerIconeModifier);
 }
 
-
 /**********************************************/
 
 function pageModeEdition() {
-
   document.addEventListener("DOMContentLoaded", () => {
     if (token) {
       displayBanner();
       replaceLinkLogin();
-      displayModifier ();
-    };
+      displayModifier();
+    }
   });
 }
 pageModeEdition();
