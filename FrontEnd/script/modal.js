@@ -116,6 +116,19 @@ function showErrorMessage(container, message) {
   container.prepend(errorMessage);
 }
 
+/******* Message de validation ****/
+function showValidationMessage(container, message) {
+  const oldMessage = container.querySelector(".validation-msg");
+  if (oldMessage) oldMessage.remove();
+
+  const validationMessage = document.createElement("div");
+  validationMessage.className = "validation-msg";
+  validationMessage.innerText = message;
+  container.prepend(validationMessage);
+  /** Disparition automatique après 3 secondes*/
+  setTimeout(() => validationMessage.remove(), 3000);
+}
+
 /************* LISTENERS GENERAUX *************/
 document.addEventListener("DOMContentLoaded", () => {
   const buttonModal = document.querySelectorAll(".js-modal");
@@ -156,7 +169,8 @@ async function deleteWork(event, id) {
     if (!response.ok) {
       throw new Error("Erreur lors de la suppression du projet");
     }
-    alert("Le projet a été supprimé avec succés.");
+    const container = document.querySelector(".modal-wrapper");
+    showValidationMessage(container, "Le projet a été supprimé avec succés !");
   } catch (error) {
     console.error(error);
   }
@@ -268,7 +282,8 @@ btnValider.addEventListener("click", async (event) => {
     }
 
     await response.json();
-    alert("Le projet a été ajouté avec succés.");
+    showValidationMessage(form, "Le projet a été ajouté avec succés !");
+
     //reset du formulaire
     form.reset();
     previewImage.src = "";
