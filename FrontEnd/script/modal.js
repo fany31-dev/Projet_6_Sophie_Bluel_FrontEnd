@@ -8,6 +8,13 @@ const modal1 = document.querySelector("#modal1");
 const modal2 = document.querySelector("#modal2");
 const openModal2 = document.getElementById("openModal2");
 
+/******** visualisation de l'image preview */
+const imageInput = document.getElementById("imageInput");
+const previewImage = document.getElementById("preview-image");
+const containerPhoto = document.getElementById("container-photo");
+const form = document.querySelector(".add-photo");
+const btnValider = document.querySelector(".btn-envoyer");
+
 /***************ouverture de la modale *****************/
 function showModal(target) {
   modal = target;
@@ -125,8 +132,8 @@ function showValidationMessage(container, message) {
   validationMessage.className = "validation-msg";
   validationMessage.innerText = message;
   container.prepend(validationMessage);
-  /** Disparition automatique après 3 secondes*/
-  setTimeout(() => validationMessage.remove(), 3000);
+  /** Disparition automatique après 2 secondes*/
+  setTimeout(() => validationMessage.remove(), 2000);
 }
 
 /************* LISTENERS GENERAUX *************/
@@ -154,6 +161,7 @@ document
 
 /******** suppression des travaux dans la modale *************/
 async function deleteWork(event, id) {
+  const container = document.querySelector(".modal-wrapper");
   event.preventDefault();
   const urlDelete = "http://localhost:5678/api/works/";
 
@@ -169,7 +177,6 @@ async function deleteWork(event, id) {
     if (!response.ok) {
       throw new Error("Erreur lors de la suppression du projet");
     }
-    const container = document.querySelector(".modal-wrapper");
     showValidationMessage(container, "Le projet a été supprimé avec succés !");
   } catch (error) {
     console.error(error);
@@ -177,13 +184,8 @@ async function deleteWork(event, id) {
 }
 
 /******** visualisation de l'image preview */
-const imageInput = document.getElementById("imageInput");
-const previewImage = document.getElementById("preview-image");
-const containerPhoto = document.getElementById("container-photo");
-
-imageInput.addEventListener("change", function () {
-  const file = this.files[0];
-
+/*** Fonction pour gérer le preview ***/
+function handleImagePreview(file) {
   if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
     // ** Supprime le message d'erreur**/
     const error = form.querySelector(".error-Format");
@@ -205,15 +207,21 @@ imageInput.addEventListener("change", function () {
     if (!form.querySelector(".error-Format")) {
       showErrorMessage(
         form,
-        "Veuillez selectionner une image au format JPG ou PNG.",
+        "Veuillez sélectionner une image au format JPG ou PNG.",
+        "error-Format",
       );
     }
   }
-});
+}
 
-/* si erreur dans le choix de la photo on reclick sur l'image pour changement*/
+/*** Clic sur l'image pour changer dans preview ***/
 previewImage.addEventListener("click", () => {
   imageInput.click();
+});
+
+/*** *AU CLIC PREVISUALISATION DE L IMAGE ***/
+imageInput.addEventListener("change", function () {
+  handleImagePreview(this.files[0]);
 });
 
 /*****appel api pour recuperer categorie dans formulaire ***/
@@ -243,10 +251,7 @@ function setCategoryForm(categories) {
 }
 
 /************************Envoyer des projets **************/
-const form = document.querySelector(".add-photo");
-const btnValider = document.querySelector(".btn-envoyer");
-
-btnValider.addEventListener("click", async (event) => {
+async function submitProject(event) {
   event.preventDefault(); // Empêche le rechargement de la page
 
   const image = document.querySelector("#imageInput").files[0];
@@ -293,4 +298,5 @@ btnValider.addEventListener("click", async (event) => {
   } catch (error) {
     console.error(error);
   }
-});
+}
+btnValider.addEventListener("click", submitProject);
