@@ -9,7 +9,6 @@ const modal2 = document.querySelector("#modal2");
 const openModal2 = document.getElementById("openModal2");
 
 /***************ouverture de la modale *****************/
-
 function showModal(target) {
   modal = target;
 
@@ -39,7 +38,6 @@ function openModal(event) {
 }
 
 /**********ouverture modale 2************************** */
-
 function openModalById(id) {
   const target = document.getElementById(id);
   showModal(target);
@@ -103,6 +101,20 @@ window.addEventListener("keydown", function (e) {
     focusInModal(e, modal);
   }
 });
+
+/******* Message d’erreur générique ****/
+function showErrorMessage(container, message) {
+  // Effacer le message d’erreur quand on clique dans le formulaire
+  form.addEventListener("click", () => {
+    const oldError = container.querySelector(".error-Form");
+    if (oldError) oldError.remove();
+  });
+
+  const errorMessage = document.createElement("div");
+  errorMessage.className = "error-Form";
+  errorMessage.innerText = message;
+  container.prepend(errorMessage);
+}
 
 /************* LISTENERS GENERAUX *************/
 document.addEventListener("DOMContentLoaded", () => {
@@ -177,11 +189,10 @@ imageInput.addEventListener("change", function () {
     reader.readAsDataURL(file);
   } else {
     if (!form.querySelector(".error-Format")) {
-      const errorFormatImg = document.createElement("div");
-      errorFormatImg.className = "error-Format";
-      errorFormatImg.innerText =
-        "Veuillez selectionner une image au format JPG ou PNG.";
-      form.prepend(errorFormatImg);
+      showErrorMessage(
+        form,
+        "Veuillez selectionner une image au format JPG ou PNG.",
+      );
     }
   }
 });
@@ -232,10 +243,7 @@ btnValider.addEventListener("click", async (event) => {
   if (!image || !title || !category) {
     /*creation message erreur*/
     if (!form.querySelector(".error-Form")) {
-      const errorMsgForm = document.createElement("div");
-      errorMsgForm.className = "error-Form";
-      errorMsgForm.innerText = "Veuillez remplir tous les champs !";
-      form.prepend(errorMsgForm);
+      showErrorMessage(form, "Veuillez remplir tous les champs !");
     }
   }
 
@@ -270,10 +278,4 @@ btnValider.addEventListener("click", async (event) => {
   } catch (error) {
     console.error(error);
   }
-});
-
-// Effacer le message d’erreur quand on clique dans le formulaire
-form.addEventListener("click", () => {
-  const oldError = form.querySelector(".error-Form");
-  if (oldError) oldError.remove();
 });
