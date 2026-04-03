@@ -531,7 +531,6 @@ input[type="submit"].btn-envoyer {
 	border: none;
 	margin: 0;
 	text-align: center;
-	margin-left: 90px;
 }
 
 input[type="submit"].btn-envoyer:hover,
