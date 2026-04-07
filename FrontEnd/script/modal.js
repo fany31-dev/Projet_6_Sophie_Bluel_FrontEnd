@@ -81,7 +81,7 @@ function stopPropagation(e) {
 }
 
 /*************** GESTION DU FOCUS *************/
-function focusInModal(e, modal) {
+function focusInModal(e) {
   if (focusables.length === 0) return;
 
   const first = focusables[0];
@@ -105,7 +105,7 @@ window.addEventListener("keydown", function (e) {
   }
 
   if (e.key === "Tab") {
-    focusInModal(e, modal);
+    focusInModal(e);
   }
 });
 
@@ -178,6 +178,7 @@ async function deleteWork(event, id) {
       throw new Error("Erreur lors de la suppression du projet");
     }
     showValidationMessage(container, "Le projet a été supprimé avec succés !");
+    getData();
   } catch (error) {
     console.error(error);
   }
@@ -208,15 +209,22 @@ function handleImagePreview(file) {
       showErrorMessage(
         form,
         "Veuillez sélectionner une image au format JPG ou PNG.",
-        "error-Format",
       );
     }
   }
 }
 
-/*** Clic sur l'image pour changer dans preview ***/
+/*** gestion du preview ***/
 previewImage.addEventListener("click", () => {
-  imageInput.click();
+  if (previewImage.src && previewImage.style.display !== "none") {
+    previewImage.src = "";
+    previewImage.style.display = "none";
+    containerPhoto.style.display = "";
+    imageInput.value = ""; // vide le champ image
+    form.reset(); // vide le formulaire
+  } else {
+    imageInput.click();
+  }
 });
 
 /*** *AU CLIC PREVISUALISATION DE L IMAGE ***/

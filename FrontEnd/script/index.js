@@ -14,9 +14,6 @@ async function getData() {
     /*Données/réponses retournées par l'API */
     works = await response.json();
 
-    /*Enleve l'affichage des éléments dans la galerie Projet */
-    document.querySelector(".gallery").innerHTML = "";
-
     /*On affiche les projets dans la galerie*/
     displayGallery(works);
     setFigureModal(works);
