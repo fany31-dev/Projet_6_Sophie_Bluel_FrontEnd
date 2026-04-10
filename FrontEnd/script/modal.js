@@ -145,19 +145,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*****************passage de la modale 1 vers la modale 2 */
-/*** Bouton dans la modale 1 pour ouvrir la modale 2 **/
-document.getElementById("openModal2").addEventListener("click", () => {
-  closeModal(); // ferme modal1
-  openModalById("modal2"); // ouvre modal2 proprement
-});
 
-/***** retour vers modal2 */
-document
-  .querySelector("#modal2 .js-modal-back")
-  .addEventListener("click", () => {
-    closeModal(); // ferme modal2
-    openModalById("modal1"); // rouvre modal1 proprement
+function switchModal() {
+  /*** Bouton dans la modale 1 pour ouvrir la modale 2 **/
+  document.getElementById("openModal2").addEventListener("click", () => {
+    closeModal(); // ferme modal1
+    openModalById("modal2"); // ouvre modal2 proprement
   });
+
+  /***** retour vers modal2 */
+  document
+    .querySelector("#modal2 .js-modal-back")
+    .addEventListener("click", () => {
+      closeModal(); // ferme modal2
+      openModalById("modal1"); // rouvre modal1 proprement
+    });
+}
+switchModal();
 
 /******** suppression des travaux dans la modale *************/
 async function deleteWork(event, id) {
