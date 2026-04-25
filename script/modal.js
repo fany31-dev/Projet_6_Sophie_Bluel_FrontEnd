@@ -229,6 +229,7 @@ previewImage.addEventListener("click", () => {
   } else {
     imageInput.click();
   }
+  checkFormFields();
 });
 
 /*** *AU CLIC PREVISUALISATION DE L IMAGE ***/
@@ -253,6 +254,13 @@ function setCategoryForm(categories) {
   const sectionCategory = document.querySelector("#category");
   sectionCategory.innerHTML = "";
 
+  /*** creation selecteur dans ajout projet "vide" ***/
+  const emptyOption = document.createElement("option");
+  emptyOption.innerText = "";
+  emptyOption.textContent = "";
+  /* on ajoute le bouton au container*/
+  sectionCategory.appendChild(emptyOption);
+
   categories.forEach((cat) => {
     const optionCategory = document.createElement("option");
     optionCategory.value = cat.id;
@@ -261,6 +269,29 @@ function setCategoryForm(categories) {
     sectionCategory.appendChild(optionCategory);
   });
 }
+
+/************** activer/desactiver bouton envoyer ******/
+function checkFormFields() {
+  const image = document.querySelector("#imageInput").files[0];
+  const title = document.querySelector("#titleInput").value;
+  const category = document.querySelector("#category").value;
+
+  if (image && title !== "" && category !== "") {
+    btnValider.disabled = false;
+    btnValider.classList.add("active");
+  } else {
+    btnValider.disabled = true;
+    btnValider.classList.remove("active");
+  }
+}
+
+/*************** listeners pour surveiller les champs ***************/
+
+imageInput.addEventListener("change", checkFormFields);
+document
+  .querySelector("#titleInput")
+  .addEventListener("input", checkFormFields);
+document.querySelector("#category").addEventListener("change", checkFormFields);
 
 /************************Envoyer des projets **************/
 async function submitProject(event) {
@@ -272,43 +303,40 @@ async function submitProject(event) {
 
   // Validation simple côté client
   if (!image || !title || !category) {
-    /*creation message erreur*/
-    if (!form.querySelector(".error-Form")) {
-      showErrorMessage(form, "Veuillez remplir tous les champs !");
+    checkFormFields();
+  } else {
+    // Construction du FormData
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("title", title);
+    formData.append("category", category);
+
+    try {
+      // Envoi POST vers l'API
+      const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erreur serveur : ${response.status}`);
+      }
+      await response.json();
+      showValidationMessage(form, "Le projet a été ajouté avec succés !");
+
+      //reset du formulaire
+      form.reset();
+      previewImage.src = "";
+      previewImage.style.display = "none";
+      containerPhoto.style.display = "";
+      getData();
+      checkFormFields();
+    } catch (error) {
+      console.error(error);
     }
-  }
-
-  // Construction du FormData
-  const formData = new FormData();
-  formData.append("image", image);
-  formData.append("title", title);
-  formData.append("category", category);
-
-  try {
-    // Envoi POST vers l'API
-    const response = await fetch("http://localhost:5678/api/works", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error(`Erreur serveur : ${response.status}`);
-    }
-
-    await response.json();
-    showValidationMessage(form, "Le projet a été ajouté avec succés !");
-
-    //reset du formulaire
-    form.reset();
-    previewImage.src = "";
-    previewImage.style.display = "none";
-    containerPhoto.style.display = "";
-    getData();
-  } catch (error) {
-    console.error(error);
   }
 }
 btnValider.addEventListener("click", submitProject);
