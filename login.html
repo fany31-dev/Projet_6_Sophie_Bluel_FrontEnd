@@ -17,49 +17,60 @@
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
-  <body>
-    <header>
-      <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-      <nav>
-        <ul>
-          <li><a class="lien-projet" href="index.html">projets</a></li>
-          <li>
-            <a class="lien-contact" href="index.html#contact">contact</a>
-          </li>
-          <li><a class="lien-login" href="#login">Login</a></li>
-          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <section id="login">
-        <h2>Log In</h2>
+  <body class="container-login">
+    <div class="page-wrapper">
+      <header class="login-header">
+        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        <nav>
+          <ul>
+            <li><a class="lien-projet" href="index.html">projets</a></li>
+            <li>
+              <a class="lien-contact" href="index.html#contact">contact</a>
+            </li>
+            <li><a class="lien-login active" href="#login">login</a></li>
+            <li>
+              <a href="https://www.instagram.com/" target="_blank"
+                ><img src="./assets/icons/instagram.png" alt="Instagram"
+              /></a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <section id="login">
+          <h2>Log In</h2>
 
-        <form id="login_form">
-          <label for="login_email">Email</label>
-          <input
-            type="email"
-            name="login_email"
-            placeholder=" Votre Email"
-            id="login_email"
-            required
-          />
-          <label for="login_password">Mot de passe</label>
-          <input
-            type="password"
-            name="login_password"
-            placeholder=" Votre mot de passe"
-            id="login_password"
-            required
-          />
-          <input type="submit" value="Se connecter" id="login_button" />
-        </form>
+          <form id="login_form">
+            <label for="login_email">Email</label>
+            <input
+              type="email"
+              name="login_email"
+              placeholder=""
+              id="login_email"
+              required
+            />
+            <label for="login_password">Mot de passe</label>
+            <input
+              type="password"
+              name="login_password"
+              placeholder=""
+              id="login_password"
+              required
+            />
+            <input
+              class="login_button"
+              type="submit"
+              value="Se connecter"
+              id="login_button"
+            />
+          </form>
 
-        <p><a href="#" class="forgotten_password">Mot de passe oublié</a></p>
-      </section>
-    </main>
+          <p><a href="#" class="forgotten_password">Mot de passe oublié</a></p>
+        </section>
+      </main>
+    </div>
 
-    <footer>
+    <footer class="login-footer">
       <nav>
         <ul>
           <li>Mentions Légales</li>
