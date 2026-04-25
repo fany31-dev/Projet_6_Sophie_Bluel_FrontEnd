@@ -2,6 +2,13 @@ const formulaireLogin = document.getElementById("login_form");
 
 formulaireLogin.addEventListener("submit", connexionUtilisateur);
 
+// Empêcher l'accès à la page login si l'utilisateur est déjà connecté
+const token = sessionStorage.getItem("token");
+
+if (token) {
+  window.location.href = "index.html"; // redirection vers l'accueil
+}
+
 /* fonction connexion login utilisateur */
 async function connexionUtilisateur(event) {
   event.preventDefault(); // bloque le comportement du navigateur
