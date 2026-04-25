@@ -45,11 +45,22 @@ async function connexionUtilisateur(event) {
     }
   } catch (error) {
     console.error("Erreur API :", error);
+    /*creation message erreur si backend non connecté*/
+    if (!formulaireLogin.querySelector(".error-backend")) {
+      const errorMsg = document.createElement("div");
+      errorMsg.className = "error-backend";
+      errorMsg.innerText =
+        "Le serveur est indisponible. Veuillez réessayer ultérieurement.";
+      formulaireLogin.prepend(errorMsg);
+    }
   }
 }
 
 // Effacer le message d’erreur quand on re-clique dans le formulaire */
 formulaireLogin.addEventListener("click", () => {
-  const oldErrorMsg = login_form.querySelector(".error-login");
+  const oldErrorMsg = formulaireLogin.querySelector(".error-login");
+  const oldErrorMsgBackend = formulaireLogin.querySelector(".error-backend");
+
   if (oldErrorMsg) oldErrorMsg.remove();
+  if (oldErrorMsgBackend) oldErrorMsgBackend.remove();
 });

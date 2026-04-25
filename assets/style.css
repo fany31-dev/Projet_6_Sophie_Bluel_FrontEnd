@@ -418,7 +418,7 @@ input#login_button {
 }
 
 .error-login,
-.error-Form,
+.error-backend,
 .error-Format {
 	width: 100%;
 	max-width: 420px;
