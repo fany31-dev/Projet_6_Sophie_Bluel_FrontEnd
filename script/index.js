@@ -124,6 +124,7 @@ function displayBtnFilter(resultsCategoriesJson) {
   btnAll.innerText = "Tous";
   btnAll.dataset.name = "Tous";
   btnAll.dataset.id = 0;
+  btnAll.classList.add("active");
   sectionFilters.appendChild(btnAll);
 
   /* creation btn pour chaque categorie*/
@@ -185,7 +186,7 @@ function replaceLinkLogin() {
 
   const lienLogout = document.createElement("a");
   lienLogout.className = "lien-logout";
-  lienLogout.textContent = "Logout";
+  lienLogout.textContent = "logout";
   lienLogout.href = "index.html";
 
   lienLogout.addEventListener("click", function (event) {
