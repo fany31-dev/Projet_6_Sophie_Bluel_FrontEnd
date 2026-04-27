@@ -14,6 +14,7 @@ const previewImage = document.getElementById("preview-image");
 const photoContainer = document.getElementById("container-photo");
 const form = document.querySelector(".add-photo");
 const submitButton = document.querySelector(".btn-envoyer");
+const maxFileSize = 4 * 1024 * 1024; // 4 Mo
 
 /***************ouverture de la modale *****************/
 function showModal(target) {
@@ -118,7 +119,7 @@ function showErrorMessage(container, message) {
   });
 
   const errorMessage = document.createElement("div");
-  errorMessage.className = "error-Form";
+  errorMessage.classList.add("error-form", "error-size");
   errorMessage.innerText = message;
   container.prepend(errorMessage);
 }
@@ -145,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*****************passage de la modale 1 vers la modale 2 */
-
 function switchModal() {
   /*** Bouton dans la modale 1 pour ouvrir la modale 2 **/
   document.getElementById("openModal2").addEventListener("click", () => {
@@ -193,7 +193,7 @@ async function deleteWork(event, id) {
 function handleImagePreview(file) {
   if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
     // ** Supprime le message d'erreur**/
-    const error = form.querySelector(".error-Format");
+    const error = form.querySelector(".error-format");
     if (error) error.remove();
 
     //***chargement image ****/
@@ -209,7 +209,7 @@ function handleImagePreview(file) {
 
     reader.readAsDataURL(file);
   } else {
-    if (!form.querySelector(".error-Format")) {
+    if (!form.querySelector(".error-format")) {
       showErrorMessage(
         form,
         "Veuillez sélectionner une image au format JPG ou PNG.",
@@ -234,6 +234,24 @@ previewImage.addEventListener("click", () => {
 
 /*** *AU CLIC PREVISUALISATION DE L IMAGE ***/
 imageInput.addEventListener("change", function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  //*****verification de la taille *****/
+  if (file.size > maxFileSize) {
+    showErrorMessage(
+      form,
+      "Ce fichier dépasse la taille maximale autorisée de 4 Mo.",
+    );
+    this.value = ""; // reset input
+
+    previewImage.src = "";
+    previewImage.style.display = "none";
+    photoContainer.style.display = "";
+    checkFormFields();
+    return;
+  }
+
   handleImagePreview(this.files[0]);
 });
 

@@ -419,12 +419,30 @@ input#login_button {
 
 .error-login,
 .error-backend,
-.error-Format {
+.error-format,
+.error-data {
 	width: 100%;
 	max-width: 420px;
 	position: absolute;
 	top: 60%;
 	left: 10%;
+	color: #D8000C;
+	background-color: #FFBABA;
+	padding: 10px;
+	margin: 10px;
+	border: 1px solid #c97272;
+	text-align: center;
+	align-content: center;
+	box-sizing: border-box;
+	font-size: 18px;
+}
+
+.error-size {
+	width: 100%;
+	max-width: 420px;
+	position: absolute;
+	top: 30%;
+	left: 15%;
 	color: #D8000C;
 	background-color: #FFBABA;
 	padding: 10px;
