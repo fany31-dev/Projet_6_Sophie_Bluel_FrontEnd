@@ -114,12 +114,13 @@ window.addEventListener("keydown", function (e) {
 function showErrorMessage(container, message) {
   // Effacer le message d’erreur quand on clique dans le formulaire
   form.addEventListener("click", () => {
-    const oldError = container.querySelector(".error-Form");
-    if (oldError) oldError.remove();
+    const oldError = container
+      .querySelectorAll(".error-Format, .error-size")
+      .forEach((e) => e.remove());
   });
 
   const errorMessage = document.createElement("div");
-  errorMessage.classList.add("error-form", "error-size");
+  errorMessage.classList.add("error-format", "error-size");
   errorMessage.innerText = message;
   container.prepend(errorMessage);
 }
@@ -188,13 +189,19 @@ async function deleteWork(event, id) {
   }
 }
 
+/******** suppression des messages d'erreurs */
+function clearErrors() {
+  form
+    .querySelectorAll(".error-format, .error-size")
+    .forEach((e) => e.remove());
+}
+
 /******** visualisation de l'image preview */
 /*** Fonction pour gérer le preview ***/
 function handleImagePreview(file) {
   if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
     // ** Supprime le message d'erreur**/
-    const error = form.querySelector(".error-format");
-    if (error) error.remove();
+    clearErrors();
 
     //***chargement image ****/
     const reader = new FileReader();
@@ -209,23 +216,24 @@ function handleImagePreview(file) {
 
     reader.readAsDataURL(file);
   } else {
-    if (!form.querySelector(".error-format")) {
-      showErrorMessage(
-        form,
-        "Veuillez sélectionner une image au format JPG ou PNG.",
-      );
-    }
+    clearErrors();
+    showErrorMessage(
+      form,
+      "Veuillez sélectionner une image au format JPG ou PNG.",
+      "error-format",
+    );
   }
 }
 
 /*** gestion du preview ***/
 previewImage.addEventListener("click", () => {
+  clearErrors();
+
   if (previewImage.src && previewImage.style.display !== "none") {
     previewImage.src = "";
     previewImage.style.display = "none";
     photoContainer.style.display = "";
     imageInput.value = ""; // vide le champ image
-    form.reset(); // vide le formulaire
   } else {
     imageInput.click();
   }
@@ -242,9 +250,9 @@ imageInput.addEventListener("change", function () {
     showErrorMessage(
       form,
       "Ce fichier dépasse la taille maximale autorisée de 4 Mo.",
+      "error-size",
     );
-    this.value = ""; // reset input
-
+    imageInput.value = ""; // vide le champ image
     previewImage.src = "";
     previewImage.style.display = "none";
     photoContainer.style.display = "";

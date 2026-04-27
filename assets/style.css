@@ -418,9 +418,7 @@ input#login_button {
 }
 
 .error-login,
-.error-backend,
-.error-format,
-.error-data {
+.error-backend {
 	width: 100%;
 	max-width: 420px;
 	position: absolute;
@@ -437,11 +435,12 @@ input#login_button {
 	font-size: 18px;
 }
 
+.error-format,
 .error-size {
 	width: 100%;
 	max-width: 420px;
 	position: absolute;
-	top: 30%;
+	top: 25%;
 	left: 15%;
 	color: #D8000C;
 	background-color: #FFBABA;
@@ -452,6 +451,7 @@ input#login_button {
 	align-content: center;
 	box-sizing: border-box;
 	font-size: 18px;
+	z-index: 4;
 }
 
 .validation-msg {
@@ -467,6 +467,7 @@ input#login_button {
 	font-size: 18px;
 	position: relative;
     top: 430px;
+	z-index: 4;
 }
 
 .banner {
