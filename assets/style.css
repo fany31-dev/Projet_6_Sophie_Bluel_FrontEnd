@@ -553,12 +553,12 @@ input#login_button {
 	border: none;
 }
 
-.projet-modal {
+.project-modal {
 	width: 76.86px;
 	height: 102.57px;
 }
 
-.supp-projet {
+.delete-project {
 	width: 17px;
 	height: 17px;
 	background-color: black;
@@ -568,7 +568,7 @@ input#login_button {
 	border: none;
 }
 
-.supp-projet i {
+.delete-project i {
 	color: white;
 	font-size: 9px;
 	display: flex;

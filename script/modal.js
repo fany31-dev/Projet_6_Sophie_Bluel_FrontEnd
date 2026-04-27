@@ -11,9 +11,9 @@ const openModal2 = document.getElementById("openModal2");
 /******** visualisation de l'image preview */
 const imageInput = document.getElementById("imageInput");
 const previewImage = document.getElementById("preview-image");
-const containerPhoto = document.getElementById("container-photo");
+const photoContainer = document.getElementById("container-photo");
 const form = document.querySelector(".add-photo");
-const btnValider = document.querySelector(".btn-envoyer");
+const submitButton = document.querySelector(".btn-envoyer");
 
 /***************ouverture de la modale *****************/
 function showModal(target) {
@@ -204,7 +204,7 @@ function handleImagePreview(file) {
       previewImage.style.display = "block";
 
       /*masque l'icône ou le conteneur vide*/
-      containerPhoto.style.display = "none";
+      photoContainer.style.display = "none";
     });
 
     reader.readAsDataURL(file);
@@ -223,7 +223,7 @@ previewImage.addEventListener("click", () => {
   if (previewImage.src && previewImage.style.display !== "none") {
     previewImage.src = "";
     previewImage.style.display = "none";
-    containerPhoto.style.display = "";
+    photoContainer.style.display = "";
     imageInput.value = ""; // vide le champ image
     form.reset(); // vide le formulaire
   } else {
@@ -277,11 +277,11 @@ function checkFormFields() {
   const category = document.querySelector("#category").value;
 
   if (image && title !== "" && category !== "") {
-    btnValider.disabled = false;
-    btnValider.classList.add("active");
+    submitButton.disabled = false;
+    submitButton.classList.add("active");
   } else {
-    btnValider.disabled = true;
-    btnValider.classList.remove("active");
+    submitButton.disabled = true;
+    submitButton.classList.remove("active");
   }
 }
 
@@ -331,7 +331,7 @@ async function submitProject(event) {
       form.reset();
       previewImage.src = "";
       previewImage.style.display = "none";
-      containerPhoto.style.display = "";
+      photoContainer.style.display = "";
       getData();
       checkFormFields();
     } catch (error) {
@@ -339,4 +339,4 @@ async function submitProject(event) {
     }
   }
 }
-btnValider.addEventListener("click", submitProject);
+submitButton.addEventListener("click", submitProject);

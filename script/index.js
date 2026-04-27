@@ -25,8 +25,8 @@ getData();
 
 /********************Fonction affichage des projets dans Galerie */
 function displayGallery(works) {
-  const sectionProjet = document.querySelector(".gallery");
-  sectionProjet.innerHTML = "";
+  const projectSection = document.querySelector(".gallery");
+  projectSection.innerHTML = "";
 
   works.forEach((work) => {
     /* creation des elements de la galerie Projet*/
@@ -44,7 +44,7 @@ function displayGallery(works) {
     /*Ajout dans gallery et figure*/
     figure.appendChild(imageElement);
     figure.appendChild(titleElement);
-    sectionProjet.appendChild(figure);
+    projectSection.appendChild(figure);
   });
 }
 
@@ -61,11 +61,11 @@ function setFigureModal(works) {
     const imageElement = document.createElement("img");
     imageElement.src = work.imageUrl;
     imageElement.alt = work.title;
-    imageElement.className = "projet-modal";
+    imageElement.className = "project-modal";
 
     // /* creation poubelle */
     const btnDelete = document.createElement("button");
-    btnDelete.className = "supp-projet";
+    btnDelete.className = "delete-project";
     btnDelete.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
     // Ajout de l’event listener ici
@@ -109,7 +109,7 @@ getCategories();
 function displayBtnFilter(resultsCategoriesJson) {
   /* recuperation de la section portfolio et gallery*/
   const portfolio = document.querySelector("#portfolio");
-  const sectionProjet = document.querySelector(".gallery");
+  const projectSection = document.querySelector(".gallery");
 
   /*** creation du container des Filtres ****/
   const sectionFilters = document.createElement("div");
@@ -117,7 +117,7 @@ function displayBtnFilter(resultsCategoriesJson) {
 
   /* on ajoute le container à portfolio*/
   portfolio.appendChild(sectionFilters);
-  portfolio.insertBefore(sectionFilters, sectionProjet);
+  portfolio.insertBefore(sectionFilters, projectSection);
 
   /*** creation btn "Tous/All" ***/
   const btnAll = document.createElement("button");
@@ -146,8 +146,8 @@ function displayBtnFilter(resultsCategoriesJson) {
 /**fonction filtre par nom categories*/
 function filterByCategoryId(id) {
   if (id === 0) return works;
-  const donneesFiltrées = works.filter((item) => item.category.id === id);
-  return donneesFiltrées;
+  const filteredData = works.filter((item) => item.category.id === id);
+  return filteredData;
 }
 
 /***********************************************/
@@ -163,8 +163,8 @@ function filterButtons() {
       button.classList.add("active");
 
       const categoryId = Number(button.dataset.id);
-      const projetsFiltres = filterByCategoryId(categoryId);
-      displayGallery(projetsFiltres);
+      const filteredProjects = filterByCategoryId(categoryId);
+      displayGallery(filteredProjects);
     });
   });
 }
@@ -173,40 +173,40 @@ function filterButtons() {
 
 function displayBanner() {
   // Affichage de la bannière d'édition//
-  const banniereModeEdition = document.createElement("div");
-  banniereModeEdition.className = "banner";
-  banniereModeEdition.innerHTML =
+  const editModeBanner = document.createElement("div");
+  editModeBanner.className = "banner";
+  editModeBanner.innerHTML =
     '<p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>';
-  document.body.prepend(banniereModeEdition);
+  document.body.prepend(editModeBanner);
 }
 
 function replaceLinkLogin() {
   // Affiche "Logout" à la place de "Login"//
-  const lienLogin = document.querySelector(".lien-login");
+  const loginLink = document.querySelector(".lien-login");
 
-  const lienLogout = document.createElement("a");
-  lienLogout.className = "lien-logout";
-  lienLogout.textContent = "logout";
-  lienLogout.href = "index.html";
+  const logoutLink = document.createElement("a");
+  logoutLink.className = "lien-logout";
+  logoutLink.textContent = "logout";
+  logoutLink.href = "index.html";
 
-  lienLogout.addEventListener("click", function (event) {
+  logoutLink.addEventListener("click", function (event) {
     event.preventDefault(); // bloque le comportement du navigateur
     sessionStorage.removeItem("token");
     window.location.href = "index.html";
   });
 
-  lienLogin.replaceWith(lienLogout);
+  loginLink.replaceWith(logoutLink);
 }
 
 // affichage de la div modifier//
-function displayModifier() {
+function displayEditButton() {
   const titleGallery = document.querySelector(".title-projet");
   const portfolio = document.querySelector("#portfolio");
 
   /*** creation de l'element modifier open-modal à cote de Mon projet ***/
-  const containerIconeModifier = document.createElement("a");
-  containerIconeModifier.className = "js-modal";
-  containerIconeModifier.href = "#modal1";
+  const editIconContainer = document.createElement("a");
+  editIconContainer.className = "js-modal";
+  editIconContainer.href = "#modal1";
 
   const icone = document.createElement("i");
   icone.className = "icone-modifier";
@@ -216,23 +216,23 @@ function displayModifier() {
   textModifier.className = "text-modifier";
   textModifier.textContent = " modifier";
 
-  containerIconeModifier.appendChild(icone);
-  containerIconeModifier.appendChild(textModifier);
-  portfolio.appendChild(containerIconeModifier);
+  editIconContainer.appendChild(icone);
+  editIconContainer.appendChild(textModifier);
+  portfolio.appendChild(editIconContainer);
 
   // Ajout à côté du titre
-  titleGallery.insertAdjacentElement("afterend", containerIconeModifier);
+  titleGallery.insertAdjacentElement("afterend", editIconContainer);
 }
 
 /**********************************************/
 
-function pageModeEdition() {
+function enableEditModePage() {
   document.addEventListener("DOMContentLoaded", () => {
     if (token) {
       displayBanner();
       replaceLinkLogin();
-      displayModifier();
+      displayEditButton();
     }
   });
 }
-pageModeEdition();
+enableEditModePage();
